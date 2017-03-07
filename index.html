@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MEPI group meeting, 2017</title>
+  <meta name="description" content="">
+  <meta name="author" content="Mukarram Hossain">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/reveal.min.css">
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/default.css" id="theme">
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/zenburn.css" id="theme">
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->  <link rel="stylesheet" href = "assets/css/ribbons.css">
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class='' data-state='' id='slide-1'>
+  <h2>Alignment-free subtyping of HIV sequences</h2>
+  <p><br></br>
+<strong>Mukarram Hossain</strong>
+<br></br>
+Department of Veterinary Medicine<br>
+University of Cambridge
+<br></br>
+MEPI group meeting, March 2017 
+<br></br>
+<img src="assets/img/uc-colour-reveresed.png" width="30%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-2'>
+  <h3>Subtype classification</h3>
+  <ul>
+<li>Viruses are often grouped into subtypes.</li>
+<li>Subtypes have wide implications on the following studies of viruses:
+
+<ul>
+<li>clinical</li>
+<li>epidemiological</li>
+<li>structural</li>
+<li>functional</li>
+</ul></li>
+<li>Existing classification techniques mostly rely on alignments followed by phylogenetic and/or statistical algorithms.</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-3'>
+  <h3>Alignment uncertainty</h3>
+  <p><img src="assets/img/ha.sp.png" width="65%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-4'>
+  <h3>Alignment-free classification</h3>
+  <ul>
+<li>Lossless compression techniques have shown promising results for biological sequence classification:
+
+<ul>
+<li>Protein family prediction (Begleiter et al., 2004)</li>
+<li>Protein structure prediction (Ferragina et al., 2007)</li>
+</ul></li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-5'>
+  
+  <p><br></br>
+<img src="assets/img/comet_title.png" width="100%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-6'>
+  <h3>COMET</h3>
+  <ul>
+<li>COMET is an ultrafast alignment free subtyping tool</li>
+<li>Uses <strong>P</strong>rediction by <strong>P</strong>artial <strong>M</strong>atching (PPM)</li>
+<li>Initially designed for HIV-1</li>
+<li>COMET was tested on both synthetic (1090698) and clinical (10625) HIV datasets</li>
+<li>Sensitivity and specificity were comparable to or higher than:
+
+<ul>
+<li>REGA (de Oliveira <em>et al.</em>, 2005) and </li>
+<li>SCUEAL (Pond <em>et al.</em>, 2009)</li>
+</ul></li>
+<li>Detected and identified new recombinant forms</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-7'>
+  <h3>COMET algorithm</h3>
+  <ul>
+<li>Builds variable-order Markov models for each reference sequence</li>
+<li>Given a query, COMET calculates log likelihood of observing a base at each positions</li>
+<li>This results in a matrix of likelihood values</li>
+<li>Subtype call is done using a decision tree</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-8'>
+  <h3>The decision tree</h3>
+  <p><img src="assets/img/decision_tree.png" width="550px" height="600px" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-9'>
+  <h3>Classification using Neural Networks</h3>
+  <ul>
+<li><em>Neural networks</em> are computational system mimicking biological brain</li>
+<li>Consists of a cluster of neural units organised in layers</li>
+</ul>
+
+<p><br></br>
+<img src="assets/img/ann.jpg" width="40%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-10'>
+  <h3>ANN: design</h3>
+  <ul>
+<li>The input layer consists of 32 neurons:
+
+<ul>
+<li>gets values from the fixed context </li>
+</ul></li>
+<li>Hidden layer consists of <strong>N</strong> neurons
+
+<ul>
+<li>processes inputs coming from the input layer using wights and biases</li>
+</ul></li>
+<li>Output layer consists of 4 neurons
+
+<ul>
+<li>uses <em>softmax funnction</em> to generate probabilities for the Nucleotide bases A, C, G, T </li>
+</ul></li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-11'>
+  <h3>ANN : implementation</h3>
+  <ul>
+<li>Based on the example code from the book &#39;Neural networks and deep learning&#39; by Michael Nielsen</li>
+<li>Written in Python3 </li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-12'>
+  <h3>ANN: training</h3>
+  <ul>
+<li>We use the reference sequence set used in <strong>COMET</strong> to train the ANN</li>
+<li>Cross-validation is done using randomly removing one sequence from the training set</li>
+<li>Cross-entropy cost function is used to update network weights and biases</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-13'>
+  <h3>ANN: subtyping</h3>
+  <ul>
+<li>For each nucleotide positions in the query sequence: 
+
+<ul>
+<li>ANNs from each subtype generates probabilities of seeing the nucleotide given previous context</li>
+</ul></li>
+<li>The decision tree used in COMET is used to predict the subtype of the query sequence</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-14'>
+  <h3>Cross-validation</h3>
+  <p><img src="assets/img/accuracy_8_500_train.png" width="70%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-15'>
+  <h3>Test datasets</h3>
+  <ul>
+<li>Reference</li>
+<li>Vanderbilt</li>
+<li>PR-RT </li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-16'>
+  <h3>Accuracy comparison</h3>
+  <p><img src="assets/img/compare.png" width="60%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-17'>
+  <h3>Future direction</h3>
+  <ul>
+<li>Optimise neural network parameters</li>
+<li>Larger context size?</li>
+<li>Recursive Neural Networks (RNN)?</li>
+<li>Report breakpoints for potential novel recombinants </li>
+<li>Implement using TensorFlow </li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-18'>
+  
+  <p><br></br>
+<img src="assets/img/questions.jpg" width="600px" class="centred" style="margin: 10px 10px" /></p>
+
+</section>
+    </div>
+  </div>
+</body>
+  <script src="libraries/frameworks/revealjs/lib/js/head.min.js"></script>
+  <script src="libraries/frameworks/revealjs/js/reveal.min.js"></script>
+  <script>
+  // Full list of configuration options available here:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    theme: Reveal.getQueryHash().theme || 'default', 
+    transition: Reveal.getQueryHash().transition || 'default', 
+    dependencies: [
+    // Cross-browser shim that fully implements classList -
+    // https://github.com/eligrey/classList.js/
+      { src: 'libraries/frameworks/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList;}},
+      // Zoom in and out with Alt+click
+      { src: 'libraries/frameworks/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Speaker notes
+      { src: 'libraries/frameworks/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+      // Remote control your reveal.js presentation using a touch device
+      //{ src: 'libraries/frameworks/revealjs/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+  });
+  </script>  <!-- LOAD HIGHLIGHTER JS FILES -->
+<script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- DONE LOADING HIGHLIGHTER JS FILES -->
+ 
+
+</html>
