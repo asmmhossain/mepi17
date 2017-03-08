@@ -103,23 +103,42 @@ MEPI group meeting, March 2017
 
 </section>
 <section class='' data-state='' id='slide-9'>
+  <h3>Lossless compression using ANN</h3>
+  <ul>
+<li>Schmidhuber and Heil (1996) presented &#39;Sequential neural text compression&#39;<br></li>
+<li>Can have similar performance as PPM (MV Mahoney, 2000)</li>
+<li>The predictor network upon seeing a stream of input characters:
+
+<ul>
+<li>assigns probability distribution for the next character</li>
+</ul></li>
+<li>Probabilities can be used in the same way COMET likelihoods work</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-10'>
   <h3>Classification using Neural Networks</h3>
   <ul>
 <li><em>Neural networks</em> are computational system mimicking biological brain</li>
 <li>Consists of a cluster of neural units organised in layers</li>
+<li>All the neural units between layers are fully connected with weights attached </li>
+<li>Each neuron has activation function and a bias associated with them<br></li>
 </ul>
 
-<p><br></br>
-<img src="assets/img/ann.jpg" width="40%" style="border: 0px">&nbsp;</p>
+</section>
+<section class='' data-state='' id='slide-11'>
+  
+  <p><img src="assets/img/ann1.png" width="700px" height="500px" style="border: 0px">&nbsp;</p>
 
 </section>
-<section class='' data-state='' id='slide-10'>
+<section class='' data-state='' id='slide-12'>
   <h3>ANN: design</h3>
   <ul>
-<li>The input layer consists of 32 neurons:
+<li>The input layer consists of 32 neurons getting values from the context</li>
+<li>Each nucleotide is represented by a one-hot vector
 
 <ul>
-<li>gets values from the fixed context </li>
+<li>A is [1,0,0,0]  while T is [0,0,0,1]</li>
 </ul></li>
 <li>Hidden layer consists of <strong>N</strong> neurons
 
@@ -134,7 +153,7 @@ MEPI group meeting, March 2017
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-11'>
+<section class='' data-state='' id='slide-13'>
   <h3>ANN : implementation</h3>
   <ul>
 <li>Based on the example code from the book &#39;Neural networks and deep learning&#39; by Michael Nielsen</li>
@@ -142,16 +161,17 @@ MEPI group meeting, March 2017
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-12'>
+<section class='' data-state='' id='slide-14'>
   <h3>ANN: training</h3>
   <ul>
 <li>We use the reference sequence set used in <strong>COMET</strong> to train the ANN</li>
-<li>Cross-validation is done using randomly removing one sequence from the training set</li>
+<li>Cross-validation is done using randomly removing one sequence from the training set for each subset</li>
 <li>Cross-entropy cost function is used to update network weights and biases</li>
+<li>Multiple epochs are used and the one producing best validation accuracy is stored</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-13'>
+<section class='' data-state='' id='slide-15'>
   <h3>ANN: subtyping</h3>
   <ul>
 <li>For each nucleotide positions in the query sequence: 
@@ -163,29 +183,35 @@ MEPI group meeting, March 2017
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-14'>
+<section class='' data-state='' id='slide-16'>
+  <h3>Reference dataset</h3>
+  <p><img src="assets/img/dist.png" width="70%" style="border: 0px">&nbsp;</p>
+
+</section>
+<section class='' data-state='' id='slide-17'>
   <h3>Cross-validation</h3>
   <p><img src="assets/img/accuracy_8_500_train.png" width="70%" style="border: 0px">&nbsp;</p>
 
 </section>
-<section class='' data-state='' id='slide-15'>
+<section class='' data-state='' id='slide-18'>
   <h3>Test datasets</h3>
   <ul>
-<li>Reference</li>
-<li>Vanderbilt</li>
-<li>PR-RT </li>
+<li>Reference (215 sequences)</li>
+<li>Vanderbilt (2779 sequences)</li>
+<li>PR-RT (727 sequences)</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-16'>
+<section class='' data-state='' id='slide-19'>
   <h3>Accuracy comparison</h3>
   <p><img src="assets/img/compare.png" width="60%" style="border: 0px">&nbsp;</p>
 
 </section>
-<section class='' data-state='' id='slide-17'>
+<section class='' data-state='' id='slide-20'>
   <h3>Future direction</h3>
   <ul>
 <li>Optimise neural network parameters</li>
+<li>Use <em><code>tanh</code></em> function?</li>
 <li>Larger context size?</li>
 <li>Recursive Neural Networks (RNN)?</li>
 <li>Report breakpoints for potential novel recombinants </li>
@@ -193,7 +219,15 @@ MEPI group meeting, March 2017
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-18'>
+<section class='' data-state='' id='slide-21'>
+  <h3>Acknowledgements</h3>
+  <ul>
+<li>Simon Frost</li>
+<li>Richard Dybowski</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-22'>
   
   <p><br></br>
 <img src="assets/img/questions.jpg" width="600px" class="centred" style="margin: 10px 10px" /></p>

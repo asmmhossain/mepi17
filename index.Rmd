@@ -88,20 +88,34 @@ MEPI group meeting, March 2017
 
 ---
 
+### Lossless compression using ANN
+
+- Schmidhuber and Heil (1996) presented 'Sequential neural text compression'   
+- Can have similar performance as PPM (MV Mahoney, 2000)
+- The predictor network upon seeing a stream of input characters:
+    - assigns probability distribution for the next character
+- Probabilities can be used in the same way COMET likelihoods work
+
+---
+
 ### Classification using Neural Networks
 
 - *Neural networks* are computational system mimicking biological brain
 - Consists of a cluster of neural units organised in layers
+- All the neural units between layers are fully connected with weights attached 
+- Each neuron has activation function and a bias associated with them  
 
-<br></br>
-<img src="assets/img/ann.jpg" width="40%" style="border: 0px">&nbsp;
+---
+
+<img src="assets/img/ann1.png" width="700px" height="500px" style="border: 0px">&nbsp;
 
 ---
 
 ### ANN: design
 
-- The input layer consists of 32 neurons:
-    - gets values from the fixed context 
+- The input layer consists of 32 neurons getting values from the context
+- Each nucleotide is represented by a one-hot vector
+    - A is [1,0,0,0]  while T is [0,0,0,1]
 - Hidden layer consists of **N** neurons
     - processes inputs coming from the input layer using wights and biases
 - Output layer consists of 4 neurons
@@ -119,8 +133,9 @@ MEPI group meeting, March 2017
 ### ANN: training
 
 - We use the reference sequence set used in **COMET** to train the ANN
-- Cross-validation is done using randomly removing one sequence from the training set
+- Cross-validation is done using randomly removing one sequence from the training set for each subset
 - Cross-entropy cost function is used to update network weights and biases
+- Multiple epochs are used and the one producing best validation accuracy is stored
 
 ---
 
@@ -132,6 +147,12 @@ MEPI group meeting, March 2017
 
 ---
 
+### Reference dataset
+
+<img src="assets/img/dist.png" width="70%" style="border: 0px">&nbsp;
+
+---
+
 ### Cross-validation
 
 <img src="assets/img/accuracy_8_500_train.png" width="70%" style="border: 0px">&nbsp;
@@ -140,9 +161,9 @@ MEPI group meeting, March 2017
 
 ### Test datasets
 
-- Reference
-- Vanderbilt
-- PR-RT 
+- Reference (215 sequences)
+- Vanderbilt (2779 sequences)
+- PR-RT (727 sequences)
 
 ---
 
@@ -155,10 +176,18 @@ MEPI group meeting, March 2017
 ### Future direction
 
 - Optimise neural network parameters
+- Use *`tanh`* function?
 - Larger context size?
 - Recursive Neural Networks (RNN)?
 - Report breakpoints for potential novel recombinants 
 - Implement using TensorFlow 
+
+---
+
+### Acknowledgements
+
+- Simon Frost
+- Richard Dybowski
 
 ---
 
