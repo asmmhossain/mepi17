@@ -15,7 +15,7 @@ center: "false"
 knit        : slidify::knit2slides
 ---
   
-## Alignment-free subtyping of HIV sequences
+## Alignment-free subtyping of <br>HIV sequences
 <br></br>
 **Mukarram Hossain**
 <br></br>
