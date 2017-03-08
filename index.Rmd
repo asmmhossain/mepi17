@@ -178,7 +178,7 @@ MEPI group meeting, March 2017
 - Optimise neural network parameters
 - Use *`tanh`* function?
 - Larger context size?
-- Recursive Neural Networks (RNN)?
+- Recurrent Neural Networks (RNN)?
 - Report breakpoints for potential novel recombinants 
 - Implement using TensorFlow 
 
